@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+
     <!-- 表单查询 -->
     <el-form :inline="true" class="demo-form-inline">
     <el-form-item>
@@ -11,8 +12,14 @@
     <el-button type="primary" icon="el-icon-search" @click="getList()">查询</el-button>
     </el-form>
 
+    <!-- 工具条 -->
+    <div>
+        <el-button type="danger" size="mini" @click="removeRows()">批量删除</el-button> <!-- 批量删除 -->
+    </div>
+
     <!-- banner列表 -->
-    <el-table :data="list" stripe style="width: 100%">
+    <el-table :data="list" stripe style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55"/>
       <el-table-column type="index" width="50" label="序号"/>
       <el-table-column prop="hosname" label="医院名称" />
       <el-table-column prop="hoscode" label="医院编号" />
@@ -24,6 +31,22 @@
           {{ scope.row.status === 1 ? "可用" : "不可用" }}
         </template>
       </el-table-column>
+
+      <!-- 最右侧操作栏 -->
+      <el-table-column label="操作" width="280" align="center">
+        <template slot-scope="scope">
+            <!-- 删除按钮 -->
+            <el-button type="danger" size="mini" 
+                icon="el-icon-delete" @click="removeDataByRow(scope.row)"> 
+            </el-button>
+            <!-- 锁定和取消锁定 -->
+            <el-button v-if="scope.row.status==1" type="warning" size="mini" 
+                icon="el-icon-remove-outline" @click="lockHostSet(scope.row.id,0)">锁定</el-button>
+            <el-button v-if="scope.row.status==0" type="success" size="mini" 
+                icon="el-icon-circle-plus-outline" @click="lockHostSet(scope.row.id,1)">解锁</el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
 
     <!-- 分页 (分页导航条)-->
@@ -56,11 +79,11 @@ export default {
     return {
       //(page, limit, searchObj)参考这里传递的参数进行定义变量
       current: 1, //当前页
-      limit: 3, //每页显示记录数
+      limit: 5, //每页显示记录数
       searchObj: { hosname: "", hoscode: "" }, //条件封装对象
       list: [], //每页数据集合，这个是用来接受返回的列表的
-      total: 0,
-      multipleSelection: [],
+      total: 0, //总记录数
+      multipleSelection: [], //批量选择中选择的记录列表
     };
   },
 
@@ -90,6 +113,90 @@ export default {
           console.log(error);
         }); //请求失败
     },
+
+    //删除医院设置的方法 - 通过id
+    removeDataById(id) {
+        this.$confirm(`此操作将永久删除医院的设置信息，是否继续？`,'提示',{
+     	   confirmButtonText:'确认',
+     	   cancelButtonText:'取消',
+     	   type:'warning'
+     	}).then(()=>{  //确定执行then方法
+     		//调用删除接口
+     		hospitalSetApi.deleteHospSet(id)
+     		.then(response=>{
+     			this.$message({
+     				type:'success',
+     				message:'删除成功！'
+     			})
+     		    //刷新页面
+     			this.getList(1)
+     		})         
+     	})
+    },
+
+    //新的删除医院设置的方法 - 直接拿到整个行，这样可以配合hosname做友好提示
+    removeDataByRow(row) {
+        this.$confirm(`此操作将永久删除「${row.hosname}」的设置信息，是否继续？`,'提示',{
+     	   confirmButtonText:'确定',
+     	   cancelButtonText:'取消',
+     	   type:'warning'
+     	}).then(()=>{  //确定执行then方法
+     		//调用删除接口
+     		hospitalSetApi.deleteHospSet(row.id)
+     		.then(response=>{
+     			this.$message({
+     				type:'success',
+     				message:'删除成功！'
+     			})
+     		    //刷新页面
+     			this.getList(1)
+     		})         
+     	})
+    },
+
+    // 当表格复选框选项发生变化的时候触发
+    handleSelectionChange(selection) {
+        this.multipleSelection = selection
+    },
+
+    //批量删除
+    removeRows() {
+        this.$confirm('此操作将永久删除选中医院的设置信息, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }).then(() => { //确定执行then方法
+            var idList = []
+            //遍历数组得到每个id值，设置到idList里面
+            for(var i=0;i<this.multipleSelection.length;i++) {
+                var obj = this.multipleSelection[i]
+                var id = obj.id
+                idList.push(id)
+            }
+            //调用接口
+            hospitalSetApi.removeRows(idList)
+                .then(response => {
+                    //提示
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    })
+                    //刷新页面
+                    this.getList(1)
+                })
+        })
+    },
+
+    //锁定与解锁 
+    lockHostSet(id,status) {
+        hospitalSetApi.lockHospSet(id,status)
+        .then(response => {
+            //刷新
+            this.getList(this.current)
+        })
+    }
+
+
   },
 };
 </script>

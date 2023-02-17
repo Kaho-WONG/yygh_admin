@@ -38,11 +38,11 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/hospSet',
+    path: '/hosp',
     component: Layout,
-    redirect: '/hospSet/list',
+    redirect: '/hosp/hospSet/list',
     name: 'hospital',
-    meta: { title: '医院设置管理', icon: 'example' },
+    meta: { title: '医院管理', icon: 'example' },
     children: [
       {
         path: 'hospitalSet/list',
