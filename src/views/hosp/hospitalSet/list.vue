@@ -35,6 +35,10 @@
       <!-- 最右侧操作栏 -->
       <el-table-column label="操作" width="280" align="center">
         <template slot-scope="scope">
+            <!--编辑按钮-->
+            <router-link :to="'/hosp/hospitalSet/edit/'+scope.row.id">
+              <el-button type="primary" size="mini" icon="el-icon-edit"></el-button> 
+            </router-link>
             <!-- 删除按钮 -->
             <el-button type="danger" size="mini" 
                 icon="el-icon-delete" @click="removeDataByRow(scope.row)"> 

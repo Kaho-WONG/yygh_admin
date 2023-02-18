@@ -45,8 +45,23 @@ export default {
       method: 'post',
       data: hospitalSet
     })
+  },
+
+  //医院设置  根据id查询
+  getHospSet(id) {
+    return request ({
+      url: `${api_name}/getHospSet/${id}`,
+      method: 'get'
+    })
+  },
+
+  //修改医院设置
+  updateHospSet(hospitalSet) {
+    return request ({
+      url: `${api_name}/updateHospitalSet`,
+      method: 'post',
+      data: hospitalSet
+    })
   }
-
-
 
 }
