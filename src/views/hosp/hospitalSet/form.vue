@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import hospitalSetApi from "@/api/hosp/hospitalSet";
+import hospitalSetApi from "@/api/hospitalSet";
 
 export default {
   data() {

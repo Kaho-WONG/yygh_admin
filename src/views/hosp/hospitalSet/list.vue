@@ -39,15 +39,15 @@
             <router-link :to="'/hosp/hospitalSet/edit/'+scope.row.id">
               <el-button type="primary" size="mini" icon="el-icon-edit"></el-button> 
             </router-link>
+            <!-- 锁定和取消锁定 -->
+            <el-button v-if="scope.row.status==1" type="warning" size="mini" 
+                icon="el-icon-lock" @click="lockHostSet(scope.row.id,0)"></el-button>
+            <el-button v-if="scope.row.status==0" type="success" size="mini" 
+                icon="el-icon-unlock" @click="lockHostSet(scope.row.id,1)"></el-button>
             <!-- 删除按钮 -->
             <el-button type="danger" size="mini" 
                 icon="el-icon-delete" @click="removeDataByRow(scope.row)"> 
             </el-button>
-            <!-- 锁定和取消锁定 -->
-            <el-button v-if="scope.row.status==1" type="warning" size="mini" 
-                icon="el-icon-remove-outline" @click="lockHostSet(scope.row.id,0)">锁定</el-button>
-            <el-button v-if="scope.row.status==0" type="success" size="mini" 
-                icon="el-icon-circle-plus-outline" @click="lockHostSet(scope.row.id,1)">解锁</el-button>
         </template>
       </el-table-column>
 
@@ -69,7 +69,7 @@
 
 <script>
 //引入接口定义的js文件
-import hospitalSetApi from "@/api/hosp/hospitalSet"; //即前面定义的那个api下的js
+import hospitalSetApi from "@/api/hospitalSet"; //即前面定义的那个api下的js
 
 export default {
   /*
