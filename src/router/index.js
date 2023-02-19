@@ -43,13 +43,13 @@ export const constantRouterMap = [
     redirect: '/cmn/list',
     name: '数据管理',
     alwaysShow: true,
-    meta: { title: '数据管理', icon: 'example' },
+    meta: { title: '数据管理', icon: 'nested' },
     children: [
       {
         path: 'list',
         name: '数据字典',
         component: () => import('@/views/dict/list'),
-        meta: { title: '数据字典', icon: 'table' }
+        meta: { title: '数据字典', icon: '数据字典' }
       }
     ]
   },
@@ -59,7 +59,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/hosp/hospital/list',
     name: 'hospital',
-    meta: { title: '医院管理', icon: 'example' },
+    meta: { title: '医院管理', icon: '医院管理' },
     children: [
       {
         path: 'hospitalSet/list',
