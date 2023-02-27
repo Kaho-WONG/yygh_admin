@@ -65,13 +65,14 @@ export const constantRouterMap = [
         path: 'hospitalSet/list',
         name: '医院设置列表',
         component: () => import('@/views/hosp/hospitalSet/list'),
-        meta: { title: '医院设置列表', icon: 'table' }
+        meta: { title: '医院设置', icon: 'table' }
       },
       {
         path: 'hospitalSet/add',
         name: '医院设置添加',
         component: () => import('@/views/hosp/hospitalSet/form'),
-        meta: { title: '医院设置添加', icon: 'form' }
+        meta: { title: '医院设置添加', icon: 'form' },
+        hidden: true //隐藏路由
       },
       {
         path: 'hospitalSet/edit/:id',
@@ -79,7 +80,20 @@ export const constantRouterMap = [
         component: () => import('@/views/hosp/hospitalSet/form'),
         meta: { title: '编辑', noCache: true },
         hidden: true //隐藏路由
-      }  
+      },
+      {
+        path: 'hospital/list',
+        name: '医院列表',
+        component: () =>import('@/views/hosp/hospital/list'),
+        meta: { title: '医院列表', icon: 'table' }
+      },
+      {
+        path: 'hospital/show/:id',
+        name: '查看',
+        component: () => import('@/views/hosp/hospital/show'),
+        meta: { title: '查看', noCache: true },
+        hidden: true //隐藏路由
+      }
     ]
   },
 
