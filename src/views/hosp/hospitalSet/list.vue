@@ -14,6 +14,10 @@
 
     <!-- 工具条 -->
     <div>
+        <router-link :to="'/hosp/hospitalSet/add'">
+          <el-button type="primary" size="mini">添加</el-button>
+        </router-link>
+
         <el-button type="danger" size="mini" @click="removeRows()">批量删除</el-button> <!-- 批量删除 -->
     </div>
 

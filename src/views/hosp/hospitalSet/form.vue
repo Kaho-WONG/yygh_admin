@@ -18,6 +18,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="saveOrUpdate">保存</el-button>
+        <el-button @click="back">返回</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -87,6 +88,11 @@ export default {
             this.$router.push({ path: "/hosp/hospitalSet/list" });
          });
    },
+
+   //返回医院设置列表，路由跳转
+   back() {
+      this.$router.push({ path: '/hosp/hospitalSet/list' })
+   }
   },
 };
 </script>
