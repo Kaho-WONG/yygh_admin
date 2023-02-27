@@ -63,7 +63,7 @@
         </template>
     </el-table-column>
 
-    <el-table-column label="医院logo">
+    <el-table-column label="医院 logo">
         <template slot-scope="scope">
         <img :src="'data:image/jpeg;base64,'+scope.row.logoData" width="80">
         </template>

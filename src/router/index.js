@@ -93,7 +93,15 @@ export const constantRouterMap = [
         component: () => import('@/views/hosp/hospital/show'),
         meta: { title: '查看', noCache: true },
         hidden: true //隐藏路由
+      },
+      {
+        path: 'hospital/schedule/:hoscode',
+        name: '排班',
+        component: () => import('@/views/hosp/hospital/schedule'),
+        meta: { title: '排班', noCache: true },
+        hidden: true //隐藏路由
       }
+      
     ]
   },
 
