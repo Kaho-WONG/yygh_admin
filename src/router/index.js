@@ -65,7 +65,7 @@ export const constantRouterMap = [
         path: 'hospitalSet/list',
         name: '医院设置列表',
         component: () => import('@/views/hosp/hospitalSet/list'),
-        meta: { title: '医院设置', icon: 'table' }
+        meta: { title: '医院设置', icon: 'tree' }
       },
       {
         path: 'hospitalSet/add',
@@ -84,7 +84,7 @@ export const constantRouterMap = [
       {
         path: 'hospital/list',
         name: '医院列表',
-        component: () =>import('@/views/hosp/hospital/list'),
+        component: () => import('@/views/hosp/hospital/list'),
         meta: { title: '医院列表', icon: 'table' }
       },
       {
@@ -101,9 +101,42 @@ export const constantRouterMap = [
         meta: { title: '排班', noCache: true },
         hidden: true //隐藏路由
       }
-      
+
     ]
   },
+
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/userInfo/list',
+    name: 'userInfo',
+    meta: { title: '用户管理', icon: '用户管理' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'userInfo/list',
+        name: '用户列表',
+        component: () => import('@/views/user/userInfo/list'),
+        meta: { title: '用户列表', icon: '用户列表' }
+      },
+      {
+        path: 'userInfo/show/:id',
+        name: '用户详情查看',
+        component: () => import('@/views/user/userInfo/show'),
+        meta: { title: '用户查看' },
+        hidden: true
+      },
+      {
+        path: 'userInfo/authList',
+        name: '认证审批列表',
+        component: () => import('@/views/user/userInfo/authList'),
+        meta: { title: '认证审批列表', icon: '审批' }
+      }
+
+
+    ]
+  },
+
 
   {
     path: '/example',
