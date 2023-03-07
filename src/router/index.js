@@ -132,8 +132,30 @@ export const constantRouterMap = [
         component: () => import('@/views/user/userInfo/authList'),
         meta: { title: '认证审批列表', icon: '审批' }
       }
+    ]
+  },
 
-
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/orderInfo/list',
+    name: 'BasesInfo',
+    meta: { title: '订单管理', icon: '订单管理' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'orderInfo/list',
+        name: '订单列表',
+        component: () => import('@/views/order/orderInfo/list'),
+        meta: { title: '订单列表', icon: 'table' }
+      },
+      {
+        path: 'orderInfo/show/:id',
+        name: '查看',
+        component: () => import('@/views/order/orderInfo/show'),
+        meta: { title: '查看', noCache: true },
+        hidden: true
+      }
     ]
   },
 
